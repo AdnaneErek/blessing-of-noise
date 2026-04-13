@@ -1,0 +1,44 @@
+# Robot Dataset Pretraining Configuration - Deep/Extended execution
+# Adapted from RmGPT configuration but forcing Batch 32 and higher LR to reach 0.15 loss
+
+model:
+  task_name: "reconstruction"  
+  n_channels: 9  
+  seq_len: 1000  
+  patch_len: 8
+  patch_stride_len: 8
+  d_model: 256
+  transformer_backbone: "google/flan-t5-small"
+  transformer_type: "encoder_only"
+  mask_ratio: 0.15 
+  num_class: 1
+  
+training:
+  lr: 3.0e-4  
+  weight_decay: 0.01
+  warmup_steps: 1000
+  max_grad_norm: 1.0
+  lr_schedule: "cosine"  
+  min_lr: 1.0e-6
+  
+  # Forcing the old batch size to run ~12,000 updates over 40 epochs
+  batch_size: 32
+  pretrain_epochs: 40
+  
+data:
+  data_dir: "data/raw/dataset"
+  robot_training_folder: null 
+  normalize: true
+  signal_window: 1000
+  finetune_val_size: 0.1
+  random_state: 42
+
+logging:
+  log_dir: "logs"
+  checkpoint_dir: "checkpoints"
+  save_every: 10
+
+hardware:
+  device: "cuda"
+  num_workers: 4
+  pin_memory: true

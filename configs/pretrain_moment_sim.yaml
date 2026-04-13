@@ -1,0 +1,57 @@
+# Robot Dataset Pretraining Configuration - SIMULATION DATA (MOMENT)
+# Adapted from RmGPT configuration to use MOMENT architecture
+
+# Model Configuration
+model:
+  task_name: "reconstruction"  # MOMENT task for unsupervised pretraining
+  n_channels: 9  # signal_dim
+  seq_len: 1000  # signal_window
+  patch_len: 8
+  patch_stride_len: 8
+  d_model: 256
+  transformer_backbone: "google/flan-t5-small"
+  transformer_type: "encoder_only"
+  mask_ratio: 0.15  # Equivalent to mask_prob in RmGPT
+  
+  # For classification tests (not used in unsupervised pretraining, but required config field)
+  num_class: 1
+  
+# Training Configuration - PRETRAINING (Masked Token Prediction)
+training:
+  # Learning rate for pretraining
+  lr: 1.0e-4  
+  weight_decay: 0.01
+  warmup_steps: 1000
+  max_grad_norm: 1.0
+  
+  # Learning rate schedule
+  lr_schedule: "cosine"  
+  min_lr: 1.0e-6
+  
+  # Training schedule
+  batch_size: 256
+  
+  # Pretraining epochs
+  pretrain_epochs: 50
+  
+# Data Configuration - Simulation Data Only
+data:
+  data_dir: "data/raw/dataset"
+  robot_training_folder: null  # auto-discovers all
+  normalize: true
+  signal_window: 1000
+  test_size: 0.2
+  finetune_val_size: 0.1
+  random_state: 42
+
+# Logging and Checkpointing
+logging:
+  log_dir: "logs"
+  checkpoint_dir: "checkpoints"
+  save_every: 10
+
+# Hardware Configuration
+hardware:
+  device: "cuda"
+  num_workers: 4
+  pin_memory: true

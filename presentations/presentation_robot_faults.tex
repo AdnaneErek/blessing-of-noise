@@ -1,0 +1,504 @@
+\documentclass{beamer}
+\usetheme{Madrid}
+\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{tikz}
+
+\definecolor{mygreen}{RGB}{0,140,0}
+\definecolor{myred}{RGB}{200,0,0}
+\definecolor{mygray}{RGB}{120,120,120}
+
+\title[Robot Fault Diagnosis -- MOMENT]{Robot Fault Diagnosis with MOMENT Foundation Model}
+\subtitle{Pre-training analysis, finetuning strategies, and current performance ceiling}
+\author{Fernando}
+\date{\today}
+
+\begin{document}
+
+% -----------------------------------------------
+\frame{\titlepage}
+
+% -----------------------------------------------
+\begin{frame}{Table of Contents}
+    \tableofcontents
+\end{frame}
+
+% ===============================================
+\section{Problem Description}
+% ===============================================
+
+\begin{frame}{The Problem: 9 Classes, Very Few Real Samples}
+    \begin{block}{Objective}
+        Classify 9 types of motor fault in a robot arm using time-series trajectory data (XYZ coordinates).
+    \end{block}
+
+    \vspace{0.3cm}
+    \textbf{The 9 classes:}
+    \begin{itemize}
+        \item Healthy (nominal operation)
+        \item Motors 1, 2, 3, 4 -- \textit{Stuck} (motor jam / blockage)
+        \item Motors 1, 2, 3, 4 -- \textit{Steady State Error} (persistent position offset)
+    \end{itemize}
+
+    \vspace{0.3cm}
+    \textbf{Input features (9 channels per timestep):}
+    \begin{center}
+    $\mathbf{x} = [\underbrace{x_d, y_d, z_d}_{\text{Desired Trajectory}},\; \underbrace{x_r, y_r, z_r}_{\text{Realized Trajectory}},\; \underbrace{e_x, e_y, e_z}_{\text{Position Error}}\;]$
+    \end{center}
+
+    \vspace{0.2cm}
+    \begin{alertblock}{Core challenge}
+        We only have \textbf{190 real labelled samples} ($\approx$21 per class). With a 11M-parameter model, overfitting is practically inevitable without careful regularisation.
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}{The Model: MOMENT}
+    \begin{columns}
+        \column{0.55\textwidth}
+        \textbf{MOMENT} is a time-series foundation model built on top of the \textbf{Flan-T5-Small} encoder (Google).
+        \begin{itemize}
+            \item \textbf{Architecture:} T5 Transformer Encoder
+            \item \textbf{Parameters:} 11,396,105
+            \item \textbf{Layers:} 4 Transformer blocks
+            \item \textbf{d\_model:} 256
+            \item \textbf{Originally pre-trained on:} general text corpora
+        \end{itemize}
+
+        \column{0.45\textwidth}
+        \textbf{Inference pipeline:}
+        \begin{enumerate}
+            \item Split signal into \textit{patches} of length 8
+            \item Project to 256-dim embedding space
+            \item Process through T5 encoder
+            \item Linear classification head
+        \end{enumerate}
+    \end{columns}
+
+    \vspace{0.4cm}
+    \begin{exampleblock}{Why MOMENT and not a specialised model?}
+        MOMENT enables \textit{transfer learning} from pre-trained representations, which is crucial when labelled real-world data is scarce. We can freeze large portions of the backbone and fine-tune only the top layers.
+    \end{exampleblock}
+\end{frame}
+
+% ===============================================
+\section{Pre-training Strategy}
+% ===============================================
+
+\begin{frame}{Two Pre-training Strategies Compared}
+
+    \begin{columns}
+        \column{0.5\textwidth}
+        \begin{block}{Strategy A: Unsupervised (Ours)}
+            \textbf{Task:} Masked Patch Reconstruction (Masked Autoencoder)
+            \[
+                \mathcal{L}_{MSE} = \|x - \hat{x}\|^2
+            \]
+            \textbf{Data:} 10,800 simulated trajectories\\
+            \textbf{What it learns:} General \textit{physics} of the trajectory signal
+        \end{block}
+
+        \column{0.5\textwidth}
+        \begin{alertblock}{Strategy B: Supervised (Reference)}
+            \textbf{Task:} Direct 9-class fault classification
+            \[
+                \mathcal{L}_{CE} = -\sum_k y_k \log \hat{p}_k
+            \]
+            \textbf{Data:} 10,800 simulated trajectories\\
+            \textbf{What it learns:} \textit{Statistical shortcuts} of the simulator
+        \end{alertblock}
+    \end{columns}
+
+    \vspace{0.3cm}
+    \centering
+    The difference in \textit{what} the model learns has critical consequences when evaluating on real robot data.
+\end{frame}
+
+% ===============================================
+\section{Overfitting: The Supervised Pre-training Problem}
+% ===============================================
+
+\begin{frame}{Supervised Pre-training: Catastrophic Overfitting}
+    \textbf{Experiment:} We replicated the reference model (RmGPT) strategy using identical data and configuration on our MOMENT model.
+
+    \vspace{0.2cm}
+    \begin{columns}
+        \column{0.5\textwidth}
+        \centering
+        \textbf{Real training logs:}
+
+        \begin{table}[]
+            \scriptsize
+            \begin{tabular}{@{}cccc@{}}
+                \toprule
+                \textbf{Epoch} & \textbf{Train Loss} & \textbf{Val Loss} & \textbf{Val Acc} \\ \midrule
+                1  & 2.068 & \textcolor{mygreen}{3.088} & 11.4\% \\
+                2  & 1.284 & \textcolor{mygreen}{2.985} & 20.4\% \\
+                3  & 1.088 & \textcolor{myred}{3.433} & 22.3\% \\
+                5  & 0.923 & \textcolor{myred}{3.776} & 26.2\% \\
+                8  & 0.819 & \textcolor{myred}{4.562} & 26.1\% \\
+                14 & 0.727 & \textcolor{myred}{4.099} & 28.1\% \\
+                \bottomrule
+            \end{tabular}
+        \end{table}
+
+        \column{0.5\textwidth}
+        \textbf{Red flags:}
+        \begin{itemize}
+            \item[\textcolor{myred}{\textbf{!}}] \textbf{Train Loss} drops from 2.07 to 0.73 ($-64\%$)
+            \item[\textcolor{myred}{\textbf{!}}] \textbf{Val Loss} rises from 3.09 to 4.10 ($+33\%$) -- classic overfitting
+            \item[\textcolor{myred}{\textbf{!}}] Val Accuracy \textbf{never exceeds 28\%}
+            \item[\textcolor{myred}{\textbf{!}}] Training halted at \textbf{epoch 14 of 80} by early stopping
+        \end{itemize}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Why Does Supervised Pre-training Fail?}
+
+    \begin{alertblock}{Root cause: Simulation-to-Reality Distribution Shift}
+        The model learns to classify \textbf{the simulator's output}, not the \textbf{underlying physics} of each fault.
+    \end{alertblock}
+
+    \vspace{0.3cm}
+    \textbf{Key differences between simulation and real robot data:}
+
+    \begin{enumerate}
+        \item \textbf{Sensor noise:} Simulation produces perfect, noise-free signals. The real robot introduces vibration, electronic noise, and mechanical disturbances.
+        \item \textbf{Non-linear dynamics:} Real motors exhibit friction, hysteresis, and wear that the simulator does not model faithfully.
+        \item \textbf{Load conditions:} Real experiments vary (with/without external load), whereas simulation runs under fixed conditions.
+    \end{enumerate}
+
+    \vspace{0.2cm}
+    \begin{exampleblock}{Conclusion}
+        Supervised pretraining causes the model to memorise \textit{simulator artefacts} -- perfect noiseless trajectories -- instead of learning discriminative fault physics. When exposed to real data, this knowledge \textbf{does not transfer}.
+    \end{exampleblock}
+\end{frame}
+
+\begin{frame}{Unsupervised Pre-training: The Robust Alternative}
+
+    \textbf{What does a Masked Autoencoder learn about physical signals?}
+
+    \begin{columns}
+        \column{0.55\textwidth}
+        \begin{itemize}
+            \item To reconstruct a masked patch, the model must learn:
+            \begin{itemize}
+                \item \textit{Temporal correlations} within the trajectory
+                \item \textit{Smoothness and continuity} of robot motion
+                \item \textit{Inter-axis relationships} between X, Y, Z
+            \end{itemize}
+            \item This knowledge is \textbf{label-agnostic}: it is equally valid for simulation and real data.
+        \end{itemize}
+
+        \column{0.45\textwidth}
+        \begin{block}{Results}
+            \begin{itemize}
+                \item Reconstruction loss: $\sim 0.14$
+                \item Model learns to \textit{complete} physically coherent signals
+                \item It does \textit{not} learn what a fault \textit{is} -- that is learned later during finetuning on real data
+            \end{itemize}
+        \end{block}
+    \end{columns}
+
+    \vspace{0.4cm}
+    \textbf{Analogy:} Teaching someone physics before asking them to diagnose a motor. Supervised pretraining would be teaching only the fault labels from a manual, without any physical intuition.
+\end{frame}
+
+% ===============================================
+\section{Finetuning on Real Data}
+% ===============================================
+
+\begin{frame}{The Finetuning Challenge: Architecture vs. Data}
+
+    \begin{alertblock}{The Fundamental Problem}
+        \textbf{11,396,105 parameters} to learn from \textbf{190 real training samples}.\\
+        Ratio: $\approx 60,000$ parameters per sample. Not viable without aggressive regularisation.
+    \end{alertblock}
+
+    \vspace{0.4cm}
+    \textbf{Why is MOMENT hard to finetune with few samples?}
+
+    The backbone is a \textbf{T5 Transformer originally designed for text}. Its attention mechanisms were pre-trained over word tokens, not over continuous physical signals.
+
+    \vspace{0.2cm}
+    This creates a \textbf{representational gap}:
+    \begin{itemize}
+        \item An XYZ error signal is much denser and more continuous than a sequence of text tokens.
+        \item The reference model (RmGPT) uses dedicated \textit{Wavelet + Fourier} heads that natively extract fault-characteristic frequencies.
+        \item MOMENT lacks these inductive biases and must \textit{learn} frequency analysis implicitly though attention -- requiring far more data.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Strategy 1: Progressive Unfreezing (Baseline)}
+    \begin{columns}
+        \column{0.55\textwidth}
+        \textbf{Configuration:}
+        \begin{itemize}
+            \item \textbf{Phase 1 (Warmup, 10 epochs):} Only the classification head is trained. The entire backbone is frozen.
+            \item \textbf{Phase 2 (Fine-tune):} Only the last Transformer block (block 3) is unfrozen, trained at LR $= 10^{-4}$.
+        \end{itemize}
+
+        \column{0.45\textwidth}
+        \textbf{Results:}
+        \begin{block}{}
+            \begin{itemize}
+                \item Final Val Acc: \textbf{32.6\%}
+                \item Train Acc: $\sim 50\%$
+                \item Stopped by early stopping at epoch 93
+            \end{itemize}
+        \end{block}
+    \end{columns}
+
+    \vspace{0.3cm}
+    \textbf{Observation:} The train/val gap is large from the start, indicating that the bottleneck is not just parameter count but \textit{representational quality}. With only 95 training samples, the frozen backbone does not produce features discriminative enough for the 9 fault classes.
+\end{frame}
+
+\begin{frame}{Strategy 2: Random Window Slicing (Best Result)}
+
+    \begin{block}{Idea: Data augmentation that preserves physics}
+        Instead of feeding the full signal (1000 timesteps), we sample random windows of \textbf{512 timesteps} during training.
+        \[
+            \text{Possible windows} = 1000 - 512 = 488 \text{ unique starting positions}
+        \]
+        This effectively expands 95 training samples into $95 \times 488 \approx 46,000$ unique views.
+    \end{block}
+
+    \vspace{0.2cm}
+    \textbf{Key detail:} Validation always uses the fixed centre window ($[244:756]$) to ensure stable, comparable metrics across epochs.
+
+    \vspace{0.2cm}
+    \begin{table}[]
+        \centering
+        \begin{tabular}{lcc}
+            \toprule
+            \textbf{Phase} & \textbf{Train Acc (final)} & \textbf{Val Acc (final)} \\
+            \midrule
+            Phase 1 (head only) & 46.3\% & 32.6\% \\
+            Phase 2 (head + block 3) & 72.6\% & \textbf{44.2\%} \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+
+    \begin{exampleblock}{}
+        Best result achieved: \textbf{44.2\% Val Accuracy} at epoch 68.
+    \end{exampleblock}
+\end{frame}
+
+\begin{frame}{Strategy 3: Error-Only Features (3 Channels)}
+
+    \textbf{Hypothesis:} The \textit{desired trajectory} features may act as positional shortcuts -- the model might learn \textit{where the robot is} rather than \textit{what fault it has}.
+
+    \vspace{0.2cm}
+    \textbf{Experiment:} Reduce input from 9 channels to 3 channels ($e_x, e_y, e_z$) only.
+
+    \vspace{0.2cm}
+    \begin{columns}
+        \column{0.5\textwidth}
+        \begin{alertblock}{Result}
+            Val Accuracy: \textbf{35.8\%} $\leftarrow$ Worse than baseline (44.2\%)
+        \end{alertblock}
+
+        \column{0.5\textwidth}
+        \textbf{Insight:} The model \textit{needs} the full context. The relationship between the desired and realized trajectory is discriminative: a stuck motor produces a different deviation pattern than a steady-state error, and this contrast is more visible with all 9 channels.
+    \end{columns}
+
+    \vspace{0.2cm}
+    This test confirms that all 9 channels carry \textbf{complementary information} that the model actively exploits.
+\end{frame}
+
+\begin{frame}{Strategy 4: Increased Head Dropout}
+
+    \textbf{Hypothesis:} The single-layer linear classification head might overfit. Increasing dropout from 0.1 to 0.4 should provide better regularisation.
+
+    \vspace{0.2cm}
+    \begin{table}[]
+        \centering
+        \begin{tabular}{@{}lcc@{}}
+            \toprule
+            \textbf{Config.} & \textbf{Best Val Acc} & \textbf{Best Epoch} \\
+            \midrule
+            Slicing Baseline (dropout=0.1) & \textbf{44.2\%} & 68 \\
+            Head Dropout=0.4              & 43.2\%           & 59 \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+
+    \vspace{0.2cm}
+    \textbf{Result:} No improvement. With only 95 training samples, high dropout on the head merely slows convergence without meaningful regularisation benefit. The primary source of overfitting lies in the intermediate backbone layers, not in the classification head.
+\end{frame}
+
+\begin{frame}{Strategy 5: Test-Time Augmentation (TTA)}
+
+    \textbf{Idea:} At inference time, pass 20 random windows of each signal through the model and average the softmax probabilities.
+    \[
+        \hat{p}(y|x) = \frac{1}{N}\sum_{i=1}^{N} \text{softmax}\!\left(f_\theta\!\left(x_{[s_i:\,s_i+512]}\right)\right)
+    \]
+
+    \vspace{0.2cm}
+    \textbf{Advantages:} Zero additional training cost, reduces prediction variance, more robust to local noise.
+
+    \vspace{0.2cm}
+    \begin{columns}
+        \column{0.5\textwidth}
+        \begin{table}[]
+            \footnotesize
+            \begin{tabular}{@{}lc@{}}
+                \toprule
+                \textbf{Class} & \textbf{Recall} \\
+                \midrule
+                Healthy & 70\% \\
+                Motor 1 Stuck & 60\% \\
+                \textcolor{mygreen}{Motor 1 SSE} & \textcolor{mygreen}{90\%} \\
+                Motor 2 Stuck & 20\% \\
+                Motor 3 Stuck & 10\% \\
+                Motor 4 Stuck & 10\% \\
+                \bottomrule
+            \end{tabular}
+        \end{table}
+
+        \column{0.5\textwidth}
+        \begin{alertblock}{TTA Result on real test set}
+            \textbf{38.9\%} over 90 samples from the external test set.
+        \end{alertblock}
+        \textit{Note: this is the held-out real test set, not the finetuning validation split.}
+    \end{columns}
+\end{frame}
+
+% ===============================================
+\section{Why Can We Not Exceed 44\%?}
+% ===============================================
+
+\begin{frame}{The 44\% Ceiling: An Honest Analysis}
+
+    \begin{alertblock}{Root cause: Architecture-task mismatch}
+        MOMENT is a text Transformer adapted for signals. The reference model (RmGPT) was designed natively for physical signals.
+    \end{alertblock}
+
+    \vspace{0.3cm}
+    \textbf{Key architectural differences:}
+
+    \begin{table}[]
+        \centering
+        \small
+        \begin{tabular}{@{}lll@{}}
+            \toprule
+            \textbf{Aspect} & \textbf{MOMENT (ours)} & \textbf{RmGPT (reference)} \\
+            \midrule
+            Backbone & Flan-T5 (text) & Specialised GPT \\
+            Freq. analysis & Temporal attention (implicit) & Wavelet + Fourier (explicit) \\
+            Inductive bias & Linguistic tokens & Physical signals \\
+            Pre-trained on & Text corpus & Time-series data \\
+            Param. / sample & 11M $\gg$ 190 samples & Designed for few samples \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+\end{frame}
+
+\begin{frame}{Why Wavelet / Fourier Heads Matter}
+
+    \textbf{Each motor fault has a characteristic frequency signature:}
+
+    \begin{itemize}
+        \item \textbf{Motor Stuck:} produces an energy spike at low frequencies (sudden mechanical blockage).
+        \item \textbf{Steady State Error:} produces a persistent DC component (constant position offset).
+        \item \textbf{Healthy:} clean reference signal with no anomalous spectral components.
+    \end{itemize}
+
+    \vspace{0.3cm}
+    \begin{columns}
+        \column{0.5\textwidth}
+        \begin{exampleblock}{RmGPT}
+            Contains dedicated Wavelet and Fourier heads that compute these components \textbf{exactly and explicitly}. These are perfect inductive biases for this task -- the model only needs to \textit{classify} pre-computed physics.
+        \end{exampleblock}
+
+        \column{0.5\textwidth}
+        \begin{alertblock}{MOMENT}
+            Must learn frequency analysis \textbf{implicitly} through the attention mechanism using only 95 real training samples. Theoretically possible, but requires orders of magnitude more data to be reliable.
+        \end{alertblock}
+    \end{columns}
+
+    \vspace{0.2cm}
+    \centering
+    \textit{With only 190 real samples, MOMENT does not have enough examples to learn reliable frequency-domain representations.}
+\end{frame}
+
+\begin{frame}{Consistent Train/Val Gap Across All Experiments}
+
+    \textbf{A pattern present in every single experiment:}
+
+    \begin{table}[]
+        \centering
+        \begin{tabular}{@{}lccc@{}}
+            \toprule
+            \textbf{Experiment} & \textbf{Train Acc} & \textbf{Val Acc} & \textbf{Gap} \\
+            \midrule
+            Slicing Baseline      & $\sim$72\% & 44.2\% & \textcolor{myred}{27.8\%} \\
+            Head Dropout 0.4      & $\sim$67\% & 43.2\% & \textcolor{myred}{23.8\%} \\
+            Error-Only            & $\sim$60\% & 35.8\% & \textcolor{myred}{24.2\%} \\
+            Supervised Pretrain   & $\sim$80\% & 28.1\% & \textcolor{myred}{51.9\%} \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+
+    \vspace{0.2cm}
+    The consistent $\sim\!25\%$ gap signals a \textbf{structural problem}: the model is far more complex than what the dataset can support. This is not a hyperparameter tuning issue.
+
+    \vspace{0.2cm}
+    \begin{block}{The real solution}
+        The only reliable path beyond this ceiling is \textbf{more labelled real-world data}. With $\geq 50$ samples per class (450 total), the train/val gap should close significantly.
+    \end{block}
+\end{frame}
+
+% ===============================================
+\section{Summary and Next Steps}
+% ===============================================
+
+\begin{frame}{Experiment Summary}
+
+    \begin{table}[]
+        \centering
+        \begin{tabular}{@{}llcc@{}}
+            \toprule
+            \textbf{\#} & \textbf{Strategy} & \textbf{Val Acc} & \textbf{Test Acc} \\
+            \midrule
+            1 & Supervised Pretrain (simulation) & 28.1\% (overfitting) & -- \\
+            2 & Linear Probing (fully frozen) & $\sim$42\% & -- \\
+            3 & \textbf{Window Slicing + Prog. Unfreezing} & \textbf{44.2\%} & 38.9\% \\
+            4 & Error-Only (3 channels) & 35.8\% & -- \\
+            5 & Head Dropout 0.4 & 43.2\% & -- \\
+            6 & TTA (20 random windows) & -- & 38.9\% \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+
+    \vspace{0.2cm}
+    Best current pipeline: \textbf{Unsupervised Pre-training $\rightarrow$ Window-Sliced Finetuning $\rightarrow$ TTA Inference}.
+\end{frame}
+
+\begin{frame}{Conclusions and Recommended Next Steps}
+
+    \textbf{Conclusions:}
+    \begin{itemize}
+        \item[\checkmark] Supervised pre-training on simulation data causes \textbf{catastrophic overfitting} on real robot data.
+        \item[\checkmark] Unsupervised pre-training (Masked Autoencoder) is more robust and transfers better to the real domain.
+        \item[\checkmark] With only 190 real samples, \textbf{44\% is a structural ceiling} given the parameter-to-data ratio.
+        \item[\checkmark] MOMENT has an architectural gap relative to signal-specialised models: it lacks explicit frequency-domain inductive biases (Wavelet / Fourier).
+    \end{itemize}
+
+    \vspace{0.3cm}
+    \textbf{Recommended next steps:}
+    \begin{enumerate}
+        \item \textbf{[Priority]} Collect more real labelled data ($\geq 50$ samples/class).
+        \item Explore physics-based data augmentation (fault-domain scaling, axis rotations).
+        \item Replace the single linear head with a 2-layer MLP classification head.
+        \item Perform a direct, controlled comparison between MOMENT and RmGPT on the same real test set.
+    \end{enumerate}
+\end{frame}
+
+\end{document}
