@@ -161,33 +161,42 @@ python train_rmgpt.py --config configs/paper_exact_config.yaml --task diagnosis
 ## Project Structure
 
 ```
-├── model/
-│   ├── rmgpt.py                       # Main model, DiagnosisHead, PrognosisHead
-│   ├── tokens.py                      # Token embedding layers
-│   └── transformer.py                 # Transformer encoder
-├── train/
-│   └── trainer.py                     # Training loop
-├── data/
-│   ├── dataset.py                     # PHM dataset class (bearing benchmarks)
-│   ├── robot_dataset_loader.py        # Robot dataset loading utilities
-│   └── split_strategy.py             # Paper-compliant data splits
-├── configs/
-│   ├── pretrain_robot_sim_multitask_v2.yaml
-│   ├── pretrain_robot_sim_supervised_v2.yaml
-│   ├── finetune_robot_real_v3.yaml
-│   ├── finetune_3fold_cross.yaml
-│   ├── finetune_robot_b_inverse.yaml
-│   └── paper_exact_config.yaml
-├── pretrain_robot_sim_multitask.py
-├── pretrain_robot_sim_supervised.py
-├── finetune_robot_real.py
-├── finetune_3fold_cross.py
-├── finetune_robot_b_inverse.py
-├── evaluate_robot.py
-├── evaluate_robot_b_inverse.py
-├── train_rmgpt.py                     # Paper baseline (bearing datasets)
-├── lib/                               # Bundled phmd library
-└── requirements.txt
+├── RmGPT_experiments/                 # All RmGPT-based experiments
+│   ├── model/
+│   │   ├── rmgpt.py                   # Main model, DiagnosisHead, PrognosisHead
+│   │   ├── tokens.py                  # Token embedding layers
+│   │   └── transformer.py             # Transformer encoder
+│   ├── train/
+│   │   └── trainer.py                 # Training loop
+│   ├── data/
+│   │   ├── dataset.py                 # PHM dataset class (bearing benchmarks)
+│   │   ├── robot_dataset_loader.py    # Robot dataset loading utilities
+│   │   └── split_strategy.py         # Paper-compliant data splits
+│   ├── configs/
+│   │   ├── pretrain_robot_sim_multitask_v2.yaml
+│   │   ├── pretrain_robot_sim_supervised_v2.yaml
+│   │   ├── finetune_robot_real_v3.yaml
+│   │   ├── finetune_3fold_cross.yaml
+│   │   ├── finetune_robot_b_inverse.yaml
+│   │   └── paper_exact_config.yaml
+│   ├── pretrain_robot_sim_multitask.py
+│   ├── pretrain_robot_sim_supervised.py
+│   ├── finetune_robot_real.py
+│   ├── finetune_3fold_cross.py
+│   ├── finetune_robot_b_inverse.py
+│   ├── evaluate_robot.py
+│   ├── evaluate_robot_b_inverse.py
+│   ├── train_rmgpt.py                 # Paper baseline (bearing datasets)
+│   ├── lib/                           # Bundled phmd library
+│   └── requirements.txt
+└── Moment_experiments/                # All MOMENT-based experiments
+    ├── momentfm/                      # MOMENT model library
+    ├── scripts/
+    │   ├── pretrain_moment_supervised.py
+    │   ├── pretrain_robot_moment.py
+    │   ├── finetune_robot_moment.py
+    │   └── evaluate_robot_moment.py
+    └── pretrain_moment_sim.py
 ```
 
 ---
