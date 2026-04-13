@@ -61,14 +61,14 @@ data/raw/dataset/
 │   ├── 20241016/
 │   └── 20241017/
 ├── finetuningDatasets/     # Real robot data (fine-tuning)
-│   ├── folder1/
-│   ├── folder2/
-│   └── folder3/
+│   ├── robot_a_20251127/
+│   ├── robot_a_20251127_load/
+│   └── robot_a_20251204_nominal/
 └── testDatasets/           # Held-out real evaluation
     └── 20241016/
 ```
 
-Simulation training data download:
+Simulation training data download (without noise):
 ```
 https://nextcloud.centralesupelec.fr/s/7AR6aamBZNXcRM8/download
 ```
