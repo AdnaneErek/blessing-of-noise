@@ -9,7 +9,15 @@ env/
 
 # Large/local-only training artifacts
 checkpoints/
-data/
+
+# Data folder: track Python scripts, ignore raw data files
+data/raw/**/*.mat
+data/raw/**/*.csv
+data/raw/**/*.zip
+data/raw/**/*.png
+data/raw/**/.MATLABDriveTag
+data/raw/**/.gitattributes
+data/raw/cwru/
 
 # Generated logs/results (keep selected experiment outputs below)
 logs/**

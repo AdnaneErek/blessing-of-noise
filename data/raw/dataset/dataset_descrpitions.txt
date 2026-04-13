@@ -1,0 +1,59 @@
+trainingDatasets:
+
+- 20241009
+
+No additional noise added.
+
+robotSimulator.errorBlockSize = 200; % The length of a error. The same error will persists for errorBlockSize points.
+robotSimulator.errorValues = [0 0]; % The possible errors on the positions, in robot control unit.
+robotSimulator.errorProb = [.5, .5]; % Probability distribution of different errors.
+
+% Parameters related to the stuck failure.
+robotSimulator.stuckInstantIdx = 50;
+
+% Range of the steady-state errors.
+robotSimulator.error_ll = 5;
+robotSimulator.error_ul = 20;
+robotSimulator.visualization = 0; % Turn off the visualization.
+
+- 20241015
+
+Add additional noise
+
+robotSimulator.errorBlockSize = 200; % The length of a error. The same error will persists for errorBlockSize points.
+robotSimulator.errorValues = -3:3; % The possible errors on the positions, in robot control unit.
+robotSimulator.errorProb = [.1, .1, .1, .4, .1, .1, .1]; % Probability distribution of different errors.
+
+% Parameters related to the stuck failure.
+robotSimulator.stuckInstantIdx = 50;
+
+% Range of the steady-state errors.
+robotSimulator.error_ll = 5;
+robotSimulator.error_ul = 20;
+robotSimulator.visualization = 0; % Turn off the visualization.
+
+- 20241016
+
+  - Add delay in motor response simulation.
+  - Steady state error range: 10-50
+
+- 20241017:
+  - No delay or noise
+  - Steady state error range: 10-50
+
+
+testDataset:
+
+- testingDataset_20241007
+
+  Robot control is not optimized. Some noise.
+  Steady state error range: 5-20
+
+
+- testingDataset_20241008
+
+  Stable robot control
+  Steady state error range: 5-20
+
+- 20241016:
+  - Steady state error range: 10-50
