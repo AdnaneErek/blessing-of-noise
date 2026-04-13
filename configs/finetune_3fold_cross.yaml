@@ -1,0 +1,91 @@
+# 3-Fold Cross-Experiment Configuration
+# At each experiment:
+#   - Fine-tune on 2 full folders + half of a 3rd folder
+#   - Test on the remaining half of the 3rd folder
+#
+# Folders (location in parentheses):
+#   A1: robot_a_20251127       (finetuningDatasets)
+#   A2: robot_a_20251127_load  (finetuningDatasets)
+#   B:  20241016               (testDatasets)
+
+model:
+  signal_dim: 9
+  patch_length: 256
+  tokenizer_stride: 256
+
+  embed_dim: 512
+  num_prompts: 10
+  num_faults: 9
+
+  num_layers: 4
+  num_heads: 8
+  ff_dim: 2048
+  dropout: 0.1
+  improved_diagnosis_head: true
+
+  n_fft: 256
+  wavelet: "db4"
+  wavelet_levels: 4
+
+training:
+  # Conservative few-shot adaptation
+  lr: 1.0e-6
+  head_lr: 2.0e-5
+  weight_decay: 0.01
+  warmup_steps: 10
+  max_grad_norm: 1.0
+
+  label_smoothing: 0.1
+  use_focal_loss: false
+  focal_alpha: 0.25
+  focal_gamma: 2.0
+
+  lr_schedule: "cosine"
+  min_lr: 1.0e-7
+
+  batch_size: 16
+  accumulate_grad_batches: 1
+
+  finetune_epochs: 30
+  prompt_learning_epochs: 5
+  task_type: "diagnosis"
+
+  freeze_backbone: true
+  unfreeze_percentage: 0.5
+
+data:
+  dataset_name: "ROBOT_3FOLD"
+  task_name: "diagnosis"
+  data_dir: "data/raw/dataset"
+
+  # The three folders used in the experiments
+  # Each entry: [parent_dir, folder_name]
+  #   parent_dir is either "finetuningDatasets" or "testDatasets"
+  folders:
+    - parent: "finetuningDatasets"
+      name: "robot_a_20251127"
+    - parent: "finetuningDatasets"
+      name: "robot_a_20251127_load"
+    - parent: "testDatasets"
+      name: "20241016"
+
+  # Split ratio: fraction of the held-out folder used for testing
+  test_split: 0.5
+  random_state: 42
+
+  normalize: true
+  signal_window: 1000
+  overlap: 0
+
+logging:
+  log_dir: "logs/3fold_cross"
+  checkpoint_dir: "checkpoints/3fold_cross"
+  save_every: 5
+
+evaluation:
+  save_dir: "results/3fold_cross"
+
+hardware:
+  device: "cuda"
+  num_workers: 4
+  pin_memory: true

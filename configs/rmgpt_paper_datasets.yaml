@@ -1,0 +1,39 @@
+# RmGPT Paper Datasets Configuration
+# Exact datasets used in the paper: arXiv:2409.17604v2
+
+# Diagnosis Datasets (Fault Classification)
+diagnosis_datasets:
+  - name: "CWRU"
+    task: "Diagnosis"
+    description: "Case Western Reserve University Bearing Dataset"
+    available_in_phmd: true
+    
+  - name: "SLIET"
+    task: "Diagnosis"
+    description: "SLIET Bearing Fault Diagnosis Dataset"
+    available_in_phmd: false  # Requires custom loader
+    data_dir: "./data/raw/sliet"
+    
+  - name: "QPZZ-II"
+    task: "Diagnosis"
+    description: "QPZZ-II Gear Fault Diagnosis Dataset"
+    available_in_phmd: false  # Requires custom loader
+    data_dir: "./data/raw/qpzz-ii"
+    
+  - name: "SMU"
+    task: "Diagnosis"
+    description: "SMU Gear Fault Diagnosis Dataset"
+    available_in_phmd: false  # Requires custom loader
+    data_dir: "./data/raw/smu"
+
+# Prognosis Datasets (RUL Prediction)
+prognosis_datasets:
+  - name: "XJTU-SY"
+    task: "Prognosis"
+    description: "Xi'an Jiaotong University Bearing RUL Dataset"
+    available_in_phmd: true
+    # Can also use custom loader if needed
+
+# Usage:
+# For diagnosis: python train_rmgpt.py --config configs/rmgpt_paper_datasets.yaml --task diagnosis --dataset CWRU
+# For prognosis: python train_rmgpt.py --config configs/rmgpt_paper_datasets.yaml --task prognosis --dataset XJTU-SY

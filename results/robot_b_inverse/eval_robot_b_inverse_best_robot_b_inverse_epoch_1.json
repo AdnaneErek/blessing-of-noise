@@ -1,0 +1,24 @@
+{
+  "checkpoint": "checkpoints/robot_b_inverse/best_robot_b_inverse_epoch_1.pt",
+  "setting": "robot_b_inverse",
+  "robot_b_source": {
+    "folder": "20241016",
+    "samples": 90,
+    "metrics": {
+      "accuracy": 0.6444444444444445,
+      "precision": 0.6770723104056438,
+      "recall": 0.6444444444444445,
+      "f1": 0.6216911113195943
+    }
+  },
+  "robot_a_target": {
+    "folders": "all_finetuningDatasets",
+    "samples": 190,
+    "metrics": {
+      "accuracy": 0.5842105263157895,
+      "precision": 0.6273879631855842,
+      "recall": 0.5842105263157895,
+      "f1": 0.5758218220460783
+    }
+  }
+}

@@ -1,0 +1,89 @@
+Logging to: logs/crossval_v3_70redo_20260326_184915.log
+
+============================================================
+Loading Data for Cross-Validation
+============================================================
+
+Loading individual finetuning folders for splitting...
+Found 3 finetuning folders: ['robot_a_20251204_nominal', 'robot_a_20251127', 'robot_a_20251127_load']
+
+Loading fine-tuning data from folder: robot_a_20251204_nominal
+  Found 1 fault types: ['Healthy']
+  Loading 10 files from Healthy...
+  Loaded data from robot_a_20251204_nominal
+
+Total loaded: 10 samples from 1 folder(s)
+Signal shape: (10, 1000, 9)
+Labels shape: (10,)
+Unique labels: [0]
+Class distribution:
+  Healthy: 10 samples
+  robot_a_20251204_nominal: 10 samples
+
+Loading fine-tuning data from folder: robot_a_20251127
+  Found 9 fault types: ['Healthy', 'Motor_1_Stuck', 'Motor_2_Stuck', 'Motor_3_Stuck', 'Motor_4_Stuck', 'Motor_1_Steady_state_error', 'Motor_2_Steady_state_error', 'Motor_3_Steady_state_error', 'Motor_4_Steady_state_error']
+  Loading 10 files from Healthy...
+  Loading 10 files from Motor_1_Stuck...
+  Loading 10 files from Motor_2_Stuck...
+  Loading 10 files from Motor_3_Stuck...
+  Loading 10 files from Motor_4_Stuck...
+  Loading 10 files from Motor_1_Steady_state_error...
+  Loading 10 files from Motor_2_Steady_state_error...
+  Loading 10 files from Motor_3_Steady_state_error...
+  Loading 10 files from Motor_4_Steady_state_error...
+  Loaded data from robot_a_20251127
+
+Total loaded: 90 samples from 1 folder(s)
+Signal shape: (90, 1000, 9)
+Labels shape: (90,)
+Unique labels: [0 1 2 3 4 5 6 7 8]
+Class distribution:
+  Healthy: 10 samples
+  Motor_1_Stuck: 10 samples
+  Motor_2_Stuck: 10 samples
+  Motor_3_Stuck: 10 samples
+  Motor_4_Stuck: 10 samples
+  Motor_1_Steady_state_error: 10 samples
+  Motor_2_Steady_state_error: 10 samples
+  Motor_3_Steady_state_error: 10 samples
+  Motor_4_Steady_state_error: 10 samples
+  robot_a_20251127: 90 samples
+
+Loading fine-tuning data from folder: robot_a_20251127_load
+  Found 9 fault types: ['Healthy', 'Motor_1_Stuck', 'Motor_2_Stuck', 'Motor_3_Stuck', 'Motor_4_Stuck', 'Motor_1_Steady_state_error', 'Motor_2_Steady_state_error', 'Motor_3_Steady_state_error', 'Motor_4_Steady_state_error']
+  Loading 10 files from Healthy...
+  Loading 10 files from Motor_1_Stuck...
+  Loading 10 files from Motor_2_Stuck...
+  Loading 10 files from Motor_3_Stuck...
+  Loading 10 files from Motor_4_Stuck...
+  Loading 10 files from Motor_1_Steady_state_error...
+  Loading 10 files from Motor_2_Steady_state_error...
+  Loading 10 files from Motor_3_Steady_state_error...
+  Loading 10 files from Motor_4_Steady_state_error...
+  Loaded data from robot_a_20251127_load
+
+Total loaded: 90 samples from 1 folder(s)
+Signal shape: (90, 1000, 9)
+Labels shape: (90,)
+Unique labels: [0 1 2 3 4 5 6 7 8]
+Class distribution:
+  Healthy: 10 samples
+  Motor_1_Stuck: 10 samples
+  Motor_2_Stuck: 10 samples
+  Motor_3_Stuck: 10 samples
+  Motor_4_Stuck: 10 samples
+  Motor_1_Steady_state_error: 10 samples
+  Motor_2_Steady_state_error: 10 samples
+  Motor_3_Steady_state_error: 10 samples
+  Motor_4_Steady_state_error: 10 samples
+  robot_a_20251127_load: 90 samples
+
+Excluding finetuning folders entirely (dropped from train+test): ['robot_a_20251204_nominal']
+
+Loading testDatasets...
+Traceback (most recent call last):
+  File "/gpfs/workdir/erekrakead/RmGPT/cross_validate_robot_finetuning.py", line 872, in <module>
+    main()
+  File "/gpfs/workdir/erekrakead/RmGPT/cross_validate_robot_finetuning.py", line 614, in main
+    raise ValueError("data.test_folders must be a non-empty list (or omit it to use data.test_folder)")
+ValueError: data.test_folders must be a non-empty list (or omit it to use data.test_folder)

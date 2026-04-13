@@ -1,0 +1,30 @@
+# Python caches
+__pycache__/
+*.py[cod]
+
+# Local environments
+.venv/
+venv/
+env/
+
+# Large/local-only training artifacts
+checkpoints/
+data/
+
+# Generated logs/results (keep selected experiment outputs below)
+logs/**
+results/**
+
+# Keep 3-fold cross-validation artifacts
+!logs/3fold_cross/
+!logs/3fold_cross/**
+!logs/crossval*.log
+!results/3fold_cross/
+!results/3fold_cross/**
+!results/cross_validation_results*.json
+
+# Keep robot_b_inverse artifacts
+!logs/robot_b_inverse/
+!logs/robot_b_inverse/**
+!results/robot_b_inverse/
+!results/robot_b_inverse/**

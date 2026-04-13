@@ -1,0 +1,85 @@
+# Target 90%+ Accuracy Configuration V2
+# Strategy: Higher head LR + Label Smoothing + More epochs
+
+# Model Configuration - Same as paper
+model:
+  signal_dim: 24  # Will be adapted per dataset
+  patch_length: 256
+  tokenizer_stride: 256
+  
+  embed_dim: 512
+  num_prompts: 10
+  num_faults: 1  # Will be adapted per task
+  
+  num_layers: 4
+  num_heads: 8
+  ff_dim: 2048
+  dropout: 0.1
+  improved_diagnosis_head: true  # Use improved (deeper) diagnosis head
+  
+  n_fft: 256
+  wavelet: "db4"
+  wavelet_levels: 4
+
+# Training Configuration - V2: MORE AGGRESSIVE
+training:
+  # Different learning rates for backbone vs head
+  lr: 1.5e-5  # Backbone (pretrained) - keep same
+  head_lr: 2.0e-3  # Head (new) - DOUBLED from 1e-3 for faster learning
+  weight_decay: 0.01
+  warmup_steps: 500
+  max_grad_norm: 1.0
+  label_smoothing: 0.1  # Added for better generalization
+  
+  # Learning rate schedule - CONSTANT (proven to work best)
+  lr_schedule: "constant"
+  min_lr: 1.0e-6
+  
+  # Training schedule
+  batch_size: 256
+  accumulate_grad_batches: 1
+  
+  # Fine-tuning - Can reduce epochs if learning faster
+  finetune_epochs: 150  # Reduced from 200 (should learn faster with higher LR)
+  prompt_learning_epochs: 5
+  task_type: "diagnosis"
+
+# Data Configuration - Same as paper
+data:
+  dataset_name: "CWRU"
+  task_name: "Diagnosis"
+  data_dir: "./data/raw"
+  
+  pretrain_datasets: ["CWRU", "JNUB", "KAUG17", "HSG18", "XJTU-SY"]
+  pretrain_task_names: ["Diagnosis", "Diagnosis", "Diagnosis", "Diagnosis", "Prognosis"]
+  
+  test_size: 0.2
+  finetune_val_size: 0.1
+  random_state: 42
+  
+  downsample_to_5khz: true
+  window_length: 2048
+  normalize: true
+  signal_window: null
+  overlap: 0
+
+# Evaluation Configuration
+evaluation:
+  metrics:
+    diagnosis: ["accuracy", "precision", "recall", "f1"]
+    prognosis: ["mse", "mae", "rmse", "score"]
+  save_predictions: true
+  save_dir: "results/"
+
+# Logging and Checkpoints
+logging:
+  log_dir: "logs/"
+  checkpoint_dir: "checkpoints/"
+  save_every: 10
+  log_every: 100
+
+# Hardware Configuration
+hardware:
+  device: "cuda"
+  num_workers: 4
+  pin_memory: true

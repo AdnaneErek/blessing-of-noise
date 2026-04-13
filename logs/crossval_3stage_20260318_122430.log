@@ -1,0 +1,250 @@
+Logging to: logs/crossval_3stage_20260318_122430.log
+
+============================================================
+Loading Data for Cross-Validation
+============================================================
+
+Loading individual finetuning folders for splitting...
+Found 3 finetuning folders: ['robot_a_20251204_nominal', 'robot_a_20251127', 'robot_a_20251127_load']
+
+Loading fine-tuning data from folder: robot_a_20251204_nominal
+  Found 1 fault types: ['Healthy']
+  Loading 10 files from Healthy...
+  Loaded data from robot_a_20251204_nominal
+
+Total loaded: 10 samples from 1 folder(s)
+Signal shape: (10, 1000, 9)
+Labels shape: (10,)
+Unique labels: [0]
+Class distribution:
+  Healthy: 10 samples
+  robot_a_20251204_nominal: 10 samples
+
+Loading fine-tuning data from folder: robot_a_20251127
+  Found 9 fault types: ['Healthy', 'Motor_1_Stuck', 'Motor_2_Stuck', 'Motor_3_Stuck', 'Motor_4_Stuck', 'Motor_1_Steady_state_error', 'Motor_2_Steady_state_error', 'Motor_3_Steady_state_error', 'Motor_4_Steady_state_error']
+  Loading 10 files from Healthy...
+  Loading 10 files from Motor_1_Stuck...
+  Loading 10 files from Motor_2_Stuck...
+  Loading 10 files from Motor_3_Stuck...
+  Loading 10 files from Motor_4_Stuck...
+  Loading 10 files from Motor_1_Steady_state_error...
+  Loading 10 files from Motor_2_Steady_state_error...
+  Loading 10 files from Motor_3_Steady_state_error...
+  Loading 10 files from Motor_4_Steady_state_error...
+  Loaded data from robot_a_20251127
+
+Total loaded: 90 samples from 1 folder(s)
+Signal shape: (90, 1000, 9)
+Labels shape: (90,)
+Unique labels: [0 1 2 3 4 5 6 7 8]
+Class distribution:
+  Healthy: 10 samples
+  Motor_1_Stuck: 10 samples
+  Motor_2_Stuck: 10 samples
+  Motor_3_Stuck: 10 samples
+  Motor_4_Stuck: 10 samples
+  Motor_1_Steady_state_error: 10 samples
+  Motor_2_Steady_state_error: 10 samples
+  Motor_3_Steady_state_error: 10 samples
+  Motor_4_Steady_state_error: 10 samples
+  robot_a_20251127: 90 samples
+
+Loading fine-tuning data from folder: robot_a_20251127_load
+  Found 9 fault types: ['Healthy', 'Motor_1_Stuck', 'Motor_2_Stuck', 'Motor_3_Stuck', 'Motor_4_Stuck', 'Motor_1_Steady_state_error', 'Motor_2_Steady_state_error', 'Motor_3_Steady_state_error', 'Motor_4_Steady_state_error']
+  Loading 10 files from Healthy...
+  Loading 10 files from Motor_1_Stuck...
+  Loading 10 files from Motor_2_Stuck...
+  Loading 10 files from Motor_3_Stuck...
+  Loading 10 files from Motor_4_Stuck...
+  Loading 10 files from Motor_1_Steady_state_error...
+  Loading 10 files from Motor_2_Steady_state_error...
+  Loading 10 files from Motor_3_Steady_state_error...
+  Loading 10 files from Motor_4_Steady_state_error...
+  Loaded data from robot_a_20251127_load
+
+Total loaded: 90 samples from 1 folder(s)
+Signal shape: (90, 1000, 9)
+Labels shape: (90,)
+Unique labels: [0 1 2 3 4 5 6 7 8]
+Class distribution:
+  Healthy: 10 samples
+  Motor_1_Stuck: 10 samples
+  Motor_2_Stuck: 10 samples
+  Motor_3_Stuck: 10 samples
+  Motor_4_Stuck: 10 samples
+  Motor_1_Steady_state_error: 10 samples
+  Motor_2_Steady_state_error: 10 samples
+  Motor_3_Steady_state_error: 10 samples
+  Motor_4_Steady_state_error: 10 samples
+  robot_a_20251127_load: 90 samples
+
+Excluding finetuning folders entirely (dropped from train+test): ['robot_a_20251204_nominal']
+
+Loading testDatasets...
+Loading test data from individual files in data/raw/dataset/testDatasets/20241008...
+Loading 10 files from Healthy...
+Loading 10 files from Motor_1_Stuck...
+Loading 10 files from Motor_2_Stuck...
+Loading 10 files from Motor_3_Stuck...
+Loading 10 files from Motor_4_Stuck...
+Loading 10 files from Motor_1_Steady_state_error...
+Loading 10 files from Motor_2_Steady_state_error...
+Loading 10 files from Motor_3_Steady_state_error...
+Loading 10 files from Motor_4_Steady_state_error...
+
+Loaded 90 samples
+Signal shape: (90, 1000, 9)
+Number of classes: 9
+Features: DesiredTraj xyz (3), RealizedTraj xyz (3), Error xyz (3) = 9 total
+Note: Motor commands not included (MATLAB timeseries extraction complex)
+Total testDatasets/20241008 data: 90 samples
+Loading test data from individual files in data/raw/dataset/testDatasets/20241016...
+Loading 10 files from Healthy...
+Loading 10 files from Motor_1_Stuck...
+Loading 10 files from Motor_2_Stuck...
+Loading 10 files from Motor_3_Stuck...
+Loading 10 files from Motor_4_Stuck...
+Loading 10 files from Motor_1_Steady_state_error...
+Loading 10 files from Motor_2_Steady_state_error...
+Loading 10 files from Motor_3_Steady_state_error...
+Loading 10 files from Motor_4_Steady_state_error...
+
+Loaded 90 samples
+Signal shape: (90, 1000, 9)
+Number of classes: 9
+Features: DesiredTraj xyz (3), RealizedTraj xyz (3), Error xyz (3) = 9 total
+Note: Motor commands not included (MATLAB timeseries extraction complex)
+Total testDatasets/20241016 data: 90 samples
+
+============================================================
+Starting Single Fine-Tune (finetuningDatasets) → Test (testDatasets)
+============================================================
+
+Run - finetuningDatasets/robot_a_20251127: 90 train samples
+
+Run - finetuningDatasets/robot_a_20251127_load: 90 train samples
+
+Run - testDatasets/20241008: 90 test samples
+
+Run - testDatasets/20241016: 90 test samples
+
+============================================================
+FOLD 1/5
+============================================================
+Train samples (before windowing): 180
+Test samples (before windowing): 180
+  Train (after windowing): 162 samples
+  Val (after windowing): 18 samples
+/gpfs/users/erekrakead/.conda/envs/moment_env/lib/python3.10/site-packages/torch/utils/data/dataloader.py:560: UserWarning: This DataLoader will create 4 worker processes in total. Our suggested max number of worker in current system is 3, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(_create_warning_msg(
+Warning: Could not load optimizer state: loaded state dict has a different number of parameter groups
+Optimizer will be reinitialized.
+Reset global_step from 3100 to 0 for fresh training
+Loaded diagnosis head from checkpoint
+Using different LRs: backbone=0.0, head=5e-06
+
+[Fold 1] Stage switch @ epoch 1/25: {'name': 'linear_probe', 'start_epoch': 0, 'end_epoch': 5, 'backbone_lr': 0.0, 'head_lr': 5e-06, 'unfreeze_last_n_layers': None}
+Fold 1 Epoch 1/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s]Fold 1 Epoch 1/25 [Train]:   0%|          | 0/6 [00:01<?, ?it/s, loss=0.3403, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 1/25 [Train]:  17%|#6        | 1/6 [00:01<00:07,  1.59s/it, loss=0.3403, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 1/25 [Train]:  17%|#6        | 1/6 [00:01<00:07,  1.59s/it, loss=0.3200, accuracy=0.5625, lr=0.0000]Fold 1 Epoch 1/25 [Train]:  33%|###3      | 2/6 [00:01<00:02,  1.40it/s, loss=0.3200, accuracy=0.5625, lr=0.0000]Fold 1 Epoch 1/25 [Train]:  33%|###3      | 2/6 [00:01<00:02,  1.40it/s, loss=0.3795, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 1/25 [Train]:  50%|#####     | 3/6 [00:01<00:01,  2.30it/s, loss=0.3795, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 1/25 [Train]:  50%|#####     | 3/6 [00:01<00:01,  2.30it/s, loss=0.2349, accuracy=0.6562, lr=0.0000]Fold 1 Epoch 1/25 [Train]:  67%|######6   | 4/6 [00:01<00:00,  3.30it/s, loss=0.2349, accuracy=0.6562, lr=0.0000]Fold 1 Epoch 1/25 [Train]:  67%|######6   | 4/6 [00:01<00:00,  3.30it/s, loss=0.2598, accuracy=0.6562, lr=0.0000]Fold 1 Epoch 1/25 [Train]:  83%|########3 | 5/6 [00:01<00:00,  4.34it/s, loss=0.2598, accuracy=0.6562, lr=0.0000]Fold 1 Epoch 1/25 [Train]:  83%|########3 | 5/6 [00:02<00:00,  4.34it/s, loss=0.4276, accuracy=0.5000, lr=0.0000]Fold 1 Epoch 1/25 [Train]: 100%|##########| 6/6 [00:02<00:00,  2.94it/s, loss=0.4276, accuracy=0.5000, lr=0.0000]
+Fold 1 Epoch 2/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s]Fold 1 Epoch 2/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s, loss=0.3257, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 2/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.64it/s, loss=0.3257, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 2/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.64it/s, loss=0.2698, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 2/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.58it/s, loss=0.2698, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 2/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.58it/s, loss=0.3164, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 2/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  8.46it/s, loss=0.3164, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 2/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  8.46it/s, loss=0.4086, accuracy=0.5000, lr=0.0000]Fold 1 Epoch 2/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  9.00it/s, loss=0.4086, accuracy=0.5000, lr=0.0000]Fold 1 Epoch 2/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  9.00it/s, loss=0.2850, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 2/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  9.33it/s, loss=0.2850, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 2/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  9.33it/s, loss=0.6345, accuracy=0.5000, lr=0.0000]Fold 1 Epoch 2/25 [Train]: 100%|##########| 6/6 [00:00<00:00,  9.53it/s, loss=0.6345, accuracy=0.5000, lr=0.0000]
+Fold 1 Epoch 3/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s]Fold 1 Epoch 3/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s, loss=0.3276, accuracy=0.6562, lr=0.0000]Fold 1 Epoch 3/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.60it/s, loss=0.3276, accuracy=0.6562, lr=0.0000]Fold 1 Epoch 3/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.60it/s, loss=0.2247, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 3/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.53it/s, loss=0.2247, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 3/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.53it/s, loss=0.3595, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 3/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  8.47it/s, loss=0.3595, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 3/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  8.47it/s, loss=0.3047, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 3/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  9.00it/s, loss=0.3047, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 3/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  9.00it/s, loss=0.2911, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 3/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  9.32it/s, loss=0.2911, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 3/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  9.32it/s, loss=0.9083, accuracy=0.0000, lr=0.0000]Fold 1 Epoch 3/25 [Train]: 100%|##########| 6/6 [00:00<00:00,  9.57it/s, loss=0.9083, accuracy=0.0000, lr=0.0000]
+Fold 1 Epoch 4/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s]Fold 1 Epoch 4/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s, loss=0.2968, accuracy=0.6562, lr=0.0000]Fold 1 Epoch 4/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.65it/s, loss=0.2968, accuracy=0.6562, lr=0.0000]Fold 1 Epoch 4/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.65it/s, loss=0.3181, accuracy=0.5625, lr=0.0000]Fold 1 Epoch 4/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.58it/s, loss=0.3181, accuracy=0.5625, lr=0.0000]Fold 1 Epoch 4/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.58it/s, loss=0.2900, accuracy=0.5625, lr=0.0000]Fold 1 Epoch 4/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  8.52it/s, loss=0.2900, accuracy=0.5625, lr=0.0000]Fold 1 Epoch 4/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  8.52it/s, loss=0.3475, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 4/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  8.52it/s, loss=0.3700, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 4/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  9.31it/s, loss=0.3700, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 4/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  9.31it/s, loss=0.3920, accuracy=0.5000, lr=0.0000]Fold 1 Epoch 4/25 [Train]: 100%|##########| 6/6 [00:00<00:00,  9.59it/s, loss=0.3920, accuracy=0.5000, lr=0.0000]
+Fold 1 Epoch 5/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s]Fold 1 Epoch 5/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s, loss=0.2833, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 5/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.68it/s, loss=0.2833, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 5/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.68it/s, loss=0.2884, accuracy=0.6562, lr=0.0000]Fold 1 Epoch 5/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.59it/s, loss=0.2884, accuracy=0.6562, lr=0.0000]Fold 1 Epoch 5/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.59it/s, loss=0.2452, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 5/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  8.52it/s, loss=0.2452, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 5/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  8.52it/s, loss=0.3363, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 5/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  9.04it/s, loss=0.3363, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 5/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  9.04it/s, loss=0.3376, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 5/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  9.36it/s, loss=0.3376, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 5/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  9.36it/s, loss=0.3054, accuracy=0.0000, lr=0.0000]Fold 1 Epoch 5/25 [Train]: 100%|##########| 6/6 [00:00<00:00,  9.58it/s, loss=0.3054, accuracy=0.0000, lr=0.0000]
+Using different LRs: backbone=5e-07, head=5e-06
+
+[Fold 1] Stage switch @ epoch 6/25: {'name': 'last_layers', 'start_epoch': 5, 'end_epoch': 15, 'backbone_lr': 5e-07, 'head_lr': 5e-06, 'unfreeze_last_n_layers': 2}
+Fold 1 Epoch 6/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s]Fold 1 Epoch 6/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s, loss=0.2871, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 6/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.42it/s, loss=0.2871, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 6/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.42it/s, loss=0.3084, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 6/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.22it/s, loss=0.3084, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 6/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.22it/s, loss=0.3201, accuracy=0.5625, lr=0.0000]Fold 1 Epoch 6/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  8.12it/s, loss=0.3201, accuracy=0.5625, lr=0.0000]Fold 1 Epoch 6/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  8.12it/s, loss=0.2669, accuracy=0.7500, lr=0.0000]Fold 1 Epoch 6/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.63it/s, loss=0.2669, accuracy=0.7500, lr=0.0000]Fold 1 Epoch 6/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.63it/s, loss=0.3208, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 6/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  8.94it/s, loss=0.3208, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 6/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  8.94it/s, loss=0.1175, accuracy=0.5000, lr=0.0000]Fold 1 Epoch 6/25 [Train]: 100%|##########| 6/6 [00:00<00:00,  9.19it/s, loss=0.1175, accuracy=0.5000, lr=0.0000]
+Fold 1 Epoch 7/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s]Fold 1 Epoch 7/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s, loss=0.2398, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 7/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.52it/s, loss=0.2398, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 7/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.52it/s, loss=0.2750, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 7/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.31it/s, loss=0.2750, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 7/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.31it/s, loss=0.3820, accuracy=0.5625, lr=0.0000]Fold 1 Epoch 7/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  8.19it/s, loss=0.3820, accuracy=0.5625, lr=0.0000]Fold 1 Epoch 7/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  8.19it/s, loss=0.2728, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 7/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.69it/s, loss=0.2728, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 7/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.69it/s, loss=0.3503, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 7/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  9.00it/s, loss=0.3503, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 7/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  9.00it/s, loss=1.0074, accuracy=0.0000, lr=0.0000]Fold 1 Epoch 7/25 [Train]: 100%|##########| 6/6 [00:00<00:00,  9.19it/s, loss=1.0074, accuracy=0.0000, lr=0.0000]
+Fold 1 Epoch 8/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s]Fold 1 Epoch 8/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s, loss=0.2111, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 8/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.54it/s, loss=0.2111, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 8/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.54it/s, loss=0.2642, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 8/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.35it/s, loss=0.2642, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 8/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.35it/s, loss=0.3386, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 8/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  8.22it/s, loss=0.3386, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 8/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  8.22it/s, loss=0.3408, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 8/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.71it/s, loss=0.3408, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 8/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.71it/s, loss=0.3483, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 8/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  8.99it/s, loss=0.3483, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 8/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  8.99it/s, loss=0.0184, accuracy=1.0000, lr=0.0000]Fold 1 Epoch 8/25 [Train]: 100%|##########| 6/6 [00:00<00:00,  9.13it/s, loss=0.0184, accuracy=1.0000, lr=0.0000]
+Fold 1 Epoch 9/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s]Fold 1 Epoch 9/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s, loss=0.2590, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 9/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.47it/s, loss=0.2590, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 9/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.47it/s, loss=0.3312, accuracy=0.5625, lr=0.0000]Fold 1 Epoch 9/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.34it/s, loss=0.3312, accuracy=0.5625, lr=0.0000]Fold 1 Epoch 9/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.34it/s, loss=0.2949, accuracy=0.6562, lr=0.0000]Fold 1 Epoch 9/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  8.23it/s, loss=0.2949, accuracy=0.6562, lr=0.0000]Fold 1 Epoch 9/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  8.23it/s, loss=0.3458, accuracy=0.5000, lr=0.0000]Fold 1 Epoch 9/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.72it/s, loss=0.3458, accuracy=0.5000, lr=0.0000]Fold 1 Epoch 9/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.72it/s, loss=0.3963, accuracy=0.4062, lr=0.0000]Fold 1 Epoch 9/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  9.01it/s, loss=0.3963, accuracy=0.4062, lr=0.0000]Fold 1 Epoch 9/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  9.01it/s, loss=1.0839, accuracy=0.0000, lr=0.0000]Fold 1 Epoch 9/25 [Train]: 100%|##########| 6/6 [00:00<00:00,  9.23it/s, loss=1.0839, accuracy=0.0000, lr=0.0000]
+Fold 1 Epoch 10/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s]Fold 1 Epoch 10/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s, loss=0.2450, accuracy=0.6562, lr=0.0000]Fold 1 Epoch 10/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.50it/s, loss=0.2450, accuracy=0.6562, lr=0.0000]Fold 1 Epoch 10/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.50it/s, loss=0.2305, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 10/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.33it/s, loss=0.2305, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 10/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.33it/s, loss=0.3080, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 10/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  8.22it/s, loss=0.3080, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 10/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  8.22it/s, loss=0.2937, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 10/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.71it/s, loss=0.2937, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 10/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.71it/s, loss=0.3750, accuracy=0.5625, lr=0.0000]Fold 1 Epoch 10/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  9.01it/s, loss=0.3750, accuracy=0.5625, lr=0.0000]Fold 1 Epoch 10/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  9.01it/s, loss=0.4394, accuracy=0.5000, lr=0.0000]Fold 1 Epoch 10/25 [Train]: 100%|##########| 6/6 [00:00<00:00,  9.29it/s, loss=0.4394, accuracy=0.5000, lr=0.0000]
+Fold 1 Epoch 11/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s]Fold 1 Epoch 11/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s, loss=0.2484, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 11/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.50it/s, loss=0.2484, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 11/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.50it/s, loss=0.2916, accuracy=0.6562, lr=0.0000]Fold 1 Epoch 11/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.35it/s, loss=0.2916, accuracy=0.6562, lr=0.0000]Fold 1 Epoch 11/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.35it/s, loss=0.2993, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 11/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  8.21it/s, loss=0.2993, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 11/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  8.21it/s, loss=0.3140, accuracy=0.5625, lr=0.0000]Fold 1 Epoch 11/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.69it/s, loss=0.3140, accuracy=0.5625, lr=0.0000]Fold 1 Epoch 11/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.69it/s, loss=0.3174, accuracy=0.5625, lr=0.0000]Fold 1 Epoch 11/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  8.98it/s, loss=0.3174, accuracy=0.5625, lr=0.0000]Fold 1 Epoch 11/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  8.98it/s, loss=0.4163, accuracy=0.5000, lr=0.0000]Fold 1 Epoch 11/25 [Train]: 100%|##########| 6/6 [00:00<00:00,  9.27it/s, loss=0.4163, accuracy=0.5000, lr=0.0000]
+Fold 1 Epoch 12/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s]Fold 1 Epoch 12/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s, loss=0.2186, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 12/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.51it/s, loss=0.2186, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 12/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.51it/s, loss=0.3254, accuracy=0.5625, lr=0.0000]Fold 1 Epoch 12/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.35it/s, loss=0.3254, accuracy=0.5625, lr=0.0000]Fold 1 Epoch 12/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.35it/s, loss=0.2936, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 12/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  8.22it/s, loss=0.2936, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 12/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  8.22it/s, loss=0.2994, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 12/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.72it/s, loss=0.2994, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 12/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.72it/s, loss=0.3186, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 12/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  9.01it/s, loss=0.3186, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 12/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  9.01it/s, loss=0.2826, accuracy=0.5000, lr=0.0000]Fold 1 Epoch 12/25 [Train]: 100%|##########| 6/6 [00:00<00:00,  9.16it/s, loss=0.2826, accuracy=0.5000, lr=0.0000]
+Fold 1 Epoch 13/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s]Fold 1 Epoch 13/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s, loss=0.2646, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 13/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.51it/s, loss=0.2646, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 13/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.51it/s, loss=0.2814, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 13/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.35it/s, loss=0.2814, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 13/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.35it/s, loss=0.3086, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 13/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  8.25it/s, loss=0.3086, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 13/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  8.25it/s, loss=0.3425, accuracy=0.5625, lr=0.0000]Fold 1 Epoch 13/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.69it/s, loss=0.3425, accuracy=0.5625, lr=0.0000]Fold 1 Epoch 13/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.69it/s, loss=0.2282, accuracy=0.7500, lr=0.0000]Fold 1 Epoch 13/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  8.99it/s, loss=0.2282, accuracy=0.7500, lr=0.0000]Fold 1 Epoch 13/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  8.99it/s, loss=0.0270, accuracy=1.0000, lr=0.0000]Fold 1 Epoch 13/25 [Train]: 100%|##########| 6/6 [00:00<00:00,  9.29it/s, loss=0.0270, accuracy=1.0000, lr=0.0000]
+Fold 1 Epoch 14/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s]Fold 1 Epoch 14/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s, loss=0.3738, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 14/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.49it/s, loss=0.3738, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 14/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.49it/s, loss=0.2875, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 14/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.34it/s, loss=0.2875, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 14/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.34it/s, loss=0.3668, accuracy=0.5000, lr=0.0000]Fold 1 Epoch 14/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  8.22it/s, loss=0.3668, accuracy=0.5000, lr=0.0000]Fold 1 Epoch 14/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  8.22it/s, loss=0.2631, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 14/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.71it/s, loss=0.2631, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 14/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.71it/s, loss=0.1921, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 14/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  9.00it/s, loss=0.1921, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 14/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  9.00it/s, loss=0.0374, accuracy=1.0000, lr=0.0000]Fold 1 Epoch 14/25 [Train]: 100%|##########| 6/6 [00:00<00:00,  9.20it/s, loss=0.0374, accuracy=1.0000, lr=0.0000]
+Fold 1 Epoch 15/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s]Fold 1 Epoch 15/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s, loss=0.3629, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 15/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.54it/s, loss=0.3629, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 15/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.54it/s, loss=0.2853, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 15/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.39it/s, loss=0.2853, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 15/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.39it/s, loss=0.2488, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 15/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  8.26it/s, loss=0.2488, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 15/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  8.26it/s, loss=0.3284, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 15/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.75it/s, loss=0.3284, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 15/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.75it/s, loss=0.2599, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 15/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  9.04it/s, loss=0.2599, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 15/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  9.04it/s, loss=0.3825, accuracy=0.5000, lr=0.0000]Fold 1 Epoch 15/25 [Train]: 100%|##########| 6/6 [00:00<00:00,  9.21it/s, loss=0.3825, accuracy=0.5000, lr=0.0000]
+Using different LRs: backbone=1e-07, head=2e-06
+
+[Fold 1] Stage switch @ epoch 16/25: {'name': 'full_finetune', 'start_epoch': 15, 'end_epoch': 25, 'backbone_lr': 1e-07, 'head_lr': 2e-06, 'unfreeze_last_n_layers': None}
+Fold 1 Epoch 16/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s]Fold 1 Epoch 16/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s, loss=0.2858, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 16/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.28it/s, loss=0.2858, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 16/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.28it/s, loss=0.3520, accuracy=0.5000, lr=0.0000]Fold 1 Epoch 16/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.00it/s, loss=0.3520, accuracy=0.5000, lr=0.0000]Fold 1 Epoch 16/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.00it/s, loss=0.2826, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 16/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  7.87it/s, loss=0.2826, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 16/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  7.87it/s, loss=0.2965, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 16/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.35it/s, loss=0.2965, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 16/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.35it/s, loss=0.2065, accuracy=0.7188, lr=0.0000]Fold 1 Epoch 16/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  8.64it/s, loss=0.2065, accuracy=0.7188, lr=0.0000]Fold 1 Epoch 16/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  8.64it/s, loss=0.0188, accuracy=1.0000, lr=0.0000]Fold 1 Epoch 16/25 [Train]: 100%|##########| 6/6 [00:00<00:00,  8.78it/s, loss=0.0188, accuracy=1.0000, lr=0.0000]
+Fold 1 Epoch 17/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s]Fold 1 Epoch 17/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s, loss=0.1700, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 17/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.37it/s, loss=0.1700, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 17/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.37it/s, loss=0.2044, accuracy=0.7188, lr=0.0000]Fold 1 Epoch 17/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.09it/s, loss=0.2044, accuracy=0.7188, lr=0.0000]Fold 1 Epoch 17/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.09it/s, loss=0.3844, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 17/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  7.91it/s, loss=0.3844, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 17/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  7.91it/s, loss=0.2742, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 17/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.37it/s, loss=0.2742, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 17/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.37it/s, loss=0.4026, accuracy=0.4062, lr=0.0000]Fold 1 Epoch 17/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  8.65it/s, loss=0.4026, accuracy=0.4062, lr=0.0000]Fold 1 Epoch 17/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  8.65it/s, loss=0.0224, accuracy=1.0000, lr=0.0000]Fold 1 Epoch 17/25 [Train]: 100%|##########| 6/6 [00:00<00:00,  8.89it/s, loss=0.0224, accuracy=1.0000, lr=0.0000]
+Fold 1 Epoch 18/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s]Fold 1 Epoch 18/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s, loss=0.3023, accuracy=0.5000, lr=0.0000]Fold 1 Epoch 18/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.37it/s, loss=0.3023, accuracy=0.5000, lr=0.0000]Fold 1 Epoch 18/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.37it/s, loss=0.1980, accuracy=0.7500, lr=0.0000]Fold 1 Epoch 18/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.12it/s, loss=0.1980, accuracy=0.7500, lr=0.0000]Fold 1 Epoch 18/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.12it/s, loss=0.3930, accuracy=0.4375, lr=0.0000]Fold 1 Epoch 18/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  7.91it/s, loss=0.3930, accuracy=0.4375, lr=0.0000]Fold 1 Epoch 18/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  7.91it/s, loss=0.3151, accuracy=0.5625, lr=0.0000]Fold 1 Epoch 18/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.37it/s, loss=0.3151, accuracy=0.5625, lr=0.0000]Fold 1 Epoch 18/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.37it/s, loss=0.1940, accuracy=0.7188, lr=0.0000]Fold 1 Epoch 18/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  8.65it/s, loss=0.1940, accuracy=0.7188, lr=0.0000]Fold 1 Epoch 18/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  8.65it/s, loss=0.0183, accuracy=1.0000, lr=0.0000]Fold 1 Epoch 18/25 [Train]: 100%|##########| 6/6 [00:00<00:00,  8.93it/s, loss=0.0183, accuracy=1.0000, lr=0.0000]
+Fold 1 Epoch 19/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s]Fold 1 Epoch 19/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s, loss=0.1943, accuracy=0.7500, lr=0.0000]Fold 1 Epoch 19/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.36it/s, loss=0.1943, accuracy=0.7500, lr=0.0000]Fold 1 Epoch 19/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.36it/s, loss=0.3405, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 19/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.11it/s, loss=0.3405, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 19/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.11it/s, loss=0.2265, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 19/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  7.92it/s, loss=0.2265, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 19/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  7.92it/s, loss=0.4062, accuracy=0.4688, lr=0.0000]Fold 1 Epoch 19/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.38it/s, loss=0.4062, accuracy=0.4688, lr=0.0000]Fold 1 Epoch 19/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.38it/s, loss=0.2698, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 19/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  8.65it/s, loss=0.2698, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 19/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  8.65it/s, loss=0.0191, accuracy=1.0000, lr=0.0000]Fold 1 Epoch 19/25 [Train]: 100%|##########| 6/6 [00:00<00:00,  8.82it/s, loss=0.0191, accuracy=1.0000, lr=0.0000]
+Fold 1 Epoch 20/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s]Fold 1 Epoch 20/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s, loss=0.3283, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 20/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.38it/s, loss=0.3283, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 20/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.38it/s, loss=0.2447, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 20/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.13it/s, loss=0.2447, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 20/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.13it/s, loss=0.2624, accuracy=0.6562, lr=0.0000]Fold 1 Epoch 20/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  7.94it/s, loss=0.2624, accuracy=0.6562, lr=0.0000]Fold 1 Epoch 20/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  7.94it/s, loss=0.3178, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 20/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.38it/s, loss=0.3178, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 20/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.38it/s, loss=0.2709, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 20/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  8.69it/s, loss=0.2709, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 20/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  8.69it/s, loss=0.3432, accuracy=0.5000, lr=0.0000]Fold 1 Epoch 20/25 [Train]: 100%|##########| 6/6 [00:00<00:00,  8.85it/s, loss=0.3432, accuracy=0.5000, lr=0.0000]
+Fold 1 Epoch 21/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s]Fold 1 Epoch 21/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s, loss=0.3440, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 21/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.39it/s, loss=0.3440, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 21/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.39it/s, loss=0.3244, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 21/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.12it/s, loss=0.3244, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 21/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.12it/s, loss=0.2714, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 21/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  7.93it/s, loss=0.2714, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 21/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  7.93it/s, loss=0.2592, accuracy=0.6562, lr=0.0000]Fold 1 Epoch 21/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.39it/s, loss=0.2592, accuracy=0.6562, lr=0.0000]Fold 1 Epoch 21/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.39it/s, loss=0.1852, accuracy=0.7500, lr=0.0000]Fold 1 Epoch 21/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  8.67it/s, loss=0.1852, accuracy=0.7500, lr=0.0000]Fold 1 Epoch 21/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  8.67it/s, loss=0.0183, accuracy=1.0000, lr=0.0000]Fold 1 Epoch 21/25 [Train]: 100%|##########| 6/6 [00:00<00:00,  8.93it/s, loss=0.0183, accuracy=1.0000, lr=0.0000]
+Fold 1 Epoch 22/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s]Fold 1 Epoch 22/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s, loss=0.2731, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 22/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.34it/s, loss=0.2731, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 22/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.34it/s, loss=0.1994, accuracy=0.7812, lr=0.0000]Fold 1 Epoch 22/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.09it/s, loss=0.1994, accuracy=0.7812, lr=0.0000]Fold 1 Epoch 22/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.09it/s, loss=0.2477, accuracy=0.6562, lr=0.0000]Fold 1 Epoch 22/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  7.94it/s, loss=0.2477, accuracy=0.6562, lr=0.0000]Fold 1 Epoch 22/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  7.94it/s, loss=0.2379, accuracy=0.6562, lr=0.0000]Fold 1 Epoch 22/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.40it/s, loss=0.2379, accuracy=0.6562, lr=0.0000]Fold 1 Epoch 22/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.40it/s, loss=0.4045, accuracy=0.3438, lr=0.0000]Fold 1 Epoch 22/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  8.66it/s, loss=0.4045, accuracy=0.3438, lr=0.0000]Fold 1 Epoch 22/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  8.66it/s, loss=0.2747, accuracy=0.0000, lr=0.0000]Fold 1 Epoch 22/25 [Train]: 100%|##########| 6/6 [00:00<00:00,  8.91it/s, loss=0.2747, accuracy=0.0000, lr=0.0000]
+Fold 1 Epoch 23/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s]Fold 1 Epoch 23/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s, loss=0.2929, accuracy=0.5000, lr=0.0000]Fold 1 Epoch 23/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.37it/s, loss=0.2929, accuracy=0.5000, lr=0.0000]Fold 1 Epoch 23/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.37it/s, loss=0.2302, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 23/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.08it/s, loss=0.2302, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 23/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.08it/s, loss=0.1959, accuracy=0.7500, lr=0.0000]Fold 1 Epoch 23/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  7.90it/s, loss=0.1959, accuracy=0.7500, lr=0.0000]Fold 1 Epoch 23/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  7.90it/s, loss=0.3203, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 23/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.36it/s, loss=0.3203, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 23/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.36it/s, loss=0.2726, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 23/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  8.63it/s, loss=0.2726, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 23/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  8.63it/s, loss=0.4939, accuracy=0.5000, lr=0.0000]Fold 1 Epoch 23/25 [Train]: 100%|##########| 6/6 [00:00<00:00,  8.79it/s, loss=0.4939, accuracy=0.5000, lr=0.0000]
+Fold 1 Epoch 24/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s]Fold 1 Epoch 24/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s, loss=0.2498, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 24/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.44it/s, loss=0.2498, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 24/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.44it/s, loss=0.2701, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 24/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.17it/s, loss=0.2701, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 24/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.17it/s, loss=0.2938, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 24/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  7.95it/s, loss=0.2938, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 24/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  7.95it/s, loss=0.3625, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 24/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.41it/s, loss=0.3625, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 24/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.41it/s, loss=0.3079, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 24/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  8.68it/s, loss=0.3079, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 24/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  8.68it/s, loss=0.0218, accuracy=1.0000, lr=0.0000]Fold 1 Epoch 24/25 [Train]: 100%|##########| 6/6 [00:00<00:00,  8.90it/s, loss=0.0218, accuracy=1.0000, lr=0.0000]
+Fold 1 Epoch 25/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s]Fold 1 Epoch 25/25 [Train]:   0%|          | 0/6 [00:00<?, ?it/s, loss=0.2954, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 25/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.30it/s, loss=0.2954, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 25/25 [Train]:  17%|#6        | 1/6 [00:00<00:00,  5.30it/s, loss=0.2690, accuracy=0.6562, lr=0.0000]Fold 1 Epoch 25/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.05it/s, loss=0.2690, accuracy=0.6562, lr=0.0000]Fold 1 Epoch 25/25 [Train]:  33%|###3      | 2/6 [00:00<00:00,  7.05it/s, loss=0.2399, accuracy=0.6562, lr=0.0000]Fold 1 Epoch 25/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  7.89it/s, loss=0.2399, accuracy=0.6562, lr=0.0000]Fold 1 Epoch 25/25 [Train]:  50%|#####     | 3/6 [00:00<00:00,  7.89it/s, loss=0.2132, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 25/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.34it/s, loss=0.2132, accuracy=0.6250, lr=0.0000]Fold 1 Epoch 25/25 [Train]:  67%|######6   | 4/6 [00:00<00:00,  8.34it/s, loss=0.3698, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 25/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  8.63it/s, loss=0.3698, accuracy=0.5312, lr=0.0000]Fold 1 Epoch 25/25 [Train]:  83%|########3 | 5/6 [00:00<00:00,  8.63it/s, loss=0.4301, accuracy=0.5000, lr=0.0000]Fold 1 Epoch 25/25 [Train]: 100%|##########| 6/6 [00:00<00:00,  8.82it/s, loss=0.4301, accuracy=0.5000, lr=0.0000]
+  Best validation accuracy: 0.7778 (epoch 1)
+  Test accuracy: 0.6167
+  Test F1 (macro): 0.6084
+
+============================================================
+Cross-Validation Results Summary
+============================================================
+
+Accuracy: 0.6167 ± 0.0000
+Precision (macro): 0.6243 ± 0.0000
+Recall (macro): 0.6167 ± 0.0000
+F1 (macro): 0.6084 ± 0.0000
+
+Per-fold results:
+  Fold 1: Accuracy=0.6167, F1=0.6084
+
+============================================================
+CONFUSION MATRICES
+============================================================
+
+📊 TOTAL CONFUSION MATRIX (All Folds Aggregated):
+------------------------------------------------------------
+True\Pred       HealthyMotor_1_Motor_2_Motor_3_Motor_4_Motor_1_Motor_2_Motor_3_Motor_4_
+------------------------------------------------------------
+Healthy               9       2       0       0       1       2       0       0       6
+Motor_1_Stuck         0      19       0       1       0       0       0       0       0
+Motor_2_Stuck         0       0      18       2       0       0       0       0       0
+Motor_3_Stuck         0       0       6      13       0       0       1       0       0
+Motor_4_Stuck         0       2       0       1      14       0       0       3       0
+Motor_1_Steady_state_error       2       0       0       0       4       9       0       0       5
+Motor_2_Steady_state_error       0       1       0       1       1       1      10       5       1
+Motor_3_Steady_state_error       1       0       0       0       5       1       2       7       4
+Motor_4_Steady_state_error       5       1       0       1       1       0       0       0      12
+------------------------------------------------------------
+
+📁 PER-FOLDER CONFUSION MATRICES:
+============================================================
+
+📂 Folder: testDatasets_20241008
+   Samples: 90, Accuracy: 0.5556
+------------------------------------------------------------
+True\Pred       HealthyMotor_1_Motor_2_Motor_3_Motor_4_Motor_1_Motor_2_Motor_3_Motor_4_
+------------------------------------------------------------
+Healthy               4       1       0       0       0       1       0       0       4
+Motor_1_Stuck         0      10       0       0       0       0       0       0       0
+Motor_2_Stuck         0       0      10       0       0       0       0       0       0
+Motor_3_Stuck         0       0       4       5       0       0       1       0       0
+Motor_4_Stuck         0       1       0       1       6       0       0       2       0
+Motor_1_Steady_state_error       2       0       0       0       0       4       0       0       4
+Motor_2_Steady_state_error       0       1       0       1       0       1       2       4       1
+Motor_3_Steady_state_error       1       0       0       0       1       1       0       3       4
+Motor_4_Steady_state_error       3       0       0       1       0       0       0       0       6
+------------------------------------------------------------
+
+📂 Folder: testDatasets_20241016
+   Samples: 90, Accuracy: 0.6778
+------------------------------------------------------------
+True\Pred       HealthyMotor_1_Motor_2_Motor_3_Motor_4_Motor_1_Motor_2_Motor_3_Motor_4_
+------------------------------------------------------------
+Healthy               5       1       0       0       1       1       0       0       2
+Motor_1_Stuck         0       9       0       1       0       0       0       0       0
+Motor_2_Stuck         0       0       8       2       0       0       0       0       0
+Motor_3_Stuck         0       0       2       8       0       0       0       0       0
+Motor_4_Stuck         0       1       0       0       8       0       0       1       0
+Motor_1_Steady_state_error       0       0       0       0       4       5       0       0       1
+Motor_2_Steady_state_error       0       0       0       0       1       0       8       1       0
+Motor_3_Steady_state_error       0       0       0       0       4       0       2       4       0
+Motor_4_Steady_state_error       2       1       0       0       1       0       0       0       6
+------------------------------------------------------------
+
+Results saved to: results/cross_validation_results_crossval_3stage_20260318_122430.json
+
+Cross-validation complete!

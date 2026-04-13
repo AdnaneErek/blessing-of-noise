@@ -1,0 +1,158 @@
+Logging to: logs/crossval_3stage_20260318_113236.log
+
+============================================================
+Loading Data for Cross-Validation
+============================================================
+
+Loading individual finetuning folders for splitting...
+Found 3 finetuning folders: ['robot_a_20251204_nominal', 'robot_a_20251127', 'robot_a_20251127_load']
+
+Loading fine-tuning data from folder: robot_a_20251204_nominal
+  Found 1 fault types: ['Healthy']
+  Loading 10 files from Healthy...
+  Loaded data from robot_a_20251204_nominal
+
+Total loaded: 10 samples from 1 folder(s)
+Signal shape: (10, 1000, 9)
+Labels shape: (10,)
+Unique labels: [0]
+Class distribution:
+  Healthy: 10 samples
+  robot_a_20251204_nominal: 10 samples
+
+Loading fine-tuning data from folder: robot_a_20251127
+  Found 9 fault types: ['Healthy', 'Motor_1_Stuck', 'Motor_2_Stuck', 'Motor_3_Stuck', 'Motor_4_Stuck', 'Motor_1_Steady_state_error', 'Motor_2_Steady_state_error', 'Motor_3_Steady_state_error', 'Motor_4_Steady_state_error']
+  Loading 10 files from Healthy...
+  Loading 10 files from Motor_1_Stuck...
+  Loading 10 files from Motor_2_Stuck...
+  Loading 10 files from Motor_3_Stuck...
+  Loading 10 files from Motor_4_Stuck...
+  Loading 10 files from Motor_1_Steady_state_error...
+  Loading 10 files from Motor_2_Steady_state_error...
+  Loading 10 files from Motor_3_Steady_state_error...
+  Loading 10 files from Motor_4_Steady_state_error...
+  Loaded data from robot_a_20251127
+
+Total loaded: 90 samples from 1 folder(s)
+Signal shape: (90, 1000, 9)
+Labels shape: (90,)
+Unique labels: [0 1 2 3 4 5 6 7 8]
+Class distribution:
+  Healthy: 10 samples
+  Motor_1_Stuck: 10 samples
+  Motor_2_Stuck: 10 samples
+  Motor_3_Stuck: 10 samples
+  Motor_4_Stuck: 10 samples
+  Motor_1_Steady_state_error: 10 samples
+  Motor_2_Steady_state_error: 10 samples
+  Motor_3_Steady_state_error: 10 samples
+  Motor_4_Steady_state_error: 10 samples
+  robot_a_20251127: 90 samples
+
+Loading fine-tuning data from folder: robot_a_20251127_load
+  Found 9 fault types: ['Healthy', 'Motor_1_Stuck', 'Motor_2_Stuck', 'Motor_3_Stuck', 'Motor_4_Stuck', 'Motor_1_Steady_state_error', 'Motor_2_Steady_state_error', 'Motor_3_Steady_state_error', 'Motor_4_Steady_state_error']
+  Loading 10 files from Healthy...
+  Loading 10 files from Motor_1_Stuck...
+  Loading 10 files from Motor_2_Stuck...
+  Loading 10 files from Motor_3_Stuck...
+  Loading 10 files from Motor_4_Stuck...
+  Loading 10 files from Motor_1_Steady_state_error...
+  Loading 10 files from Motor_2_Steady_state_error...
+  Loading 10 files from Motor_3_Steady_state_error...
+  Loading 10 files from Motor_4_Steady_state_error...
+  Loaded data from robot_a_20251127_load
+
+Total loaded: 90 samples from 1 folder(s)
+Signal shape: (90, 1000, 9)
+Labels shape: (90,)
+Unique labels: [0 1 2 3 4 5 6 7 8]
+Class distribution:
+  Healthy: 10 samples
+  Motor_1_Stuck: 10 samples
+  Motor_2_Stuck: 10 samples
+  Motor_3_Stuck: 10 samples
+  Motor_4_Stuck: 10 samples
+  Motor_1_Steady_state_error: 10 samples
+  Motor_2_Steady_state_error: 10 samples
+  Motor_3_Steady_state_error: 10 samples
+  Motor_4_Steady_state_error: 10 samples
+  robot_a_20251127_load: 90 samples
+
+Loading testDatasets/20241016...
+Loading test data from individual files in data/raw/dataset/testDatasets/20241016...
+Loading 10 files from Healthy...
+Loading 10 files from Motor_1_Stuck...
+Loading 10 files from Motor_2_Stuck...
+Loading 10 files from Motor_3_Stuck...
+Loading 10 files from Motor_4_Stuck...
+Loading 10 files from Motor_1_Steady_state_error...
+Loading 10 files from Motor_2_Steady_state_error...
+Loading 10 files from Motor_3_Steady_state_error...
+Loading 10 files from Motor_4_Steady_state_error...
+
+Loaded 90 samples
+Signal shape: (90, 1000, 9)
+Number of classes: 9
+Features: DesiredTraj xyz (3), RealizedTraj xyz (3), Error xyz (3) = 9 total
+Note: Motor commands not included (MATLAB timeseries extraction complex)
+Total testDatasets/20241016 data: 90 samples
+
+============================================================
+Starting 5-Fold Cross-Validation
+============================================================
+
+Fold 1 - robot_a_20251204_nominal:
+  Train half: 5 samples
+  Test half: 5 samples
+
+Fold 1 - robot_a_20251127:
+  Train half: 45 samples
+  Test half: 45 samples
+
+Fold 1 - robot_a_20251127_load:
+  Train half: 45 samples
+  Test half: 45 samples
+
+Fold 1 - testDatasets/20241016:
+  Train half: 45 samples
+  Test half: 45 samples
+
+============================================================
+FOLD 1/5
+============================================================
+Train samples (before windowing): 140
+Test samples (before windowing): 140
+  Train (after windowing): 126 samples
+  Val (after windowing): 14 samples
+/gpfs/users/erekrakead/.conda/envs/moment_env/lib/python3.10/site-packages/torch/utils/data/dataloader.py:560: UserWarning: This DataLoader will create 4 worker processes in total. Our suggested max number of worker in current system is 3, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(_create_warning_msg(
+Warning: Could not load optimizer state: loaded state dict has a different number of parameter groups
+Optimizer will be reinitialized.
+Reset global_step from 3100 to 0 for fresh training
+Loaded diagnosis head from checkpoint
+Using different LRs: backbone=0.0, head=5e-06
+
+[Fold 1] Stage switch @ epoch 1/20: {'name': 'linear_probe', 'start_epoch': 0, 'end_epoch': 4, 'backbone_lr': 0.0, 'head_lr': 5e-06, 'unfreeze_last_n_layers': None}
+Fold 1 Epoch 1/20 [Train]:   0%|          | 0/4 [00:00<?, ?it/s]Fold 1 Epoch 1/20 [Train]:   0%|          | 0/4 [00:03<?, ?it/s, loss=0.2985, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 1/20 [Train]:  25%|##5       | 1/4 [00:03<00:09,  3.12s/it, loss=0.2985, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 1/20 [Train]:  25%|##5       | 1/4 [00:03<00:09,  3.12s/it, loss=0.2330, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 1/20 [Train]:  50%|#####     | 2/4 [00:03<00:02,  1.35s/it, loss=0.2330, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 1/20 [Train]:  50%|#####     | 2/4 [00:03<00:02,  1.35s/it, loss=0.2406, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 1/20 [Train]:  75%|#######5  | 3/4 [00:03<00:00,  1.28it/s, loss=0.2406, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 1/20 [Train]:  75%|#######5  | 3/4 [00:03<00:00,  1.28it/s, loss=0.3824, accuracy=0.5333, lr=0.0000]Fold 1 Epoch 1/20 [Train]: 100%|##########| 4/4 [00:03<00:00,  1.16it/s, loss=0.3824, accuracy=0.5333, lr=0.0000]
+Fold 1 Epoch 2/20 [Train]:   0%|          | 0/4 [00:00<?, ?it/s]Fold 1 Epoch 2/20 [Train]:   0%|          | 0/4 [00:00<?, ?it/s, loss=0.2792, accuracy=0.6562, lr=0.0000]Fold 1 Epoch 2/20 [Train]:  25%|##5       | 1/4 [00:00<00:00,  5.82it/s, loss=0.2792, accuracy=0.6562, lr=0.0000]Fold 1 Epoch 2/20 [Train]:  25%|##5       | 1/4 [00:00<00:00,  5.82it/s, loss=0.3146, accuracy=0.5625, lr=0.0000]Fold 1 Epoch 2/20 [Train]:  50%|#####     | 2/4 [00:00<00:00,  7.68it/s, loss=0.3146, accuracy=0.5625, lr=0.0000]Fold 1 Epoch 2/20 [Train]:  50%|#####     | 2/4 [00:00<00:00,  7.68it/s, loss=0.3248, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 2/20 [Train]:  75%|#######5  | 3/4 [00:00<00:00,  8.58it/s, loss=0.3248, accuracy=0.5938, lr=0.0000]Fold 1 Epoch 2/20 [Train]:  75%|#######5  | 3/4 [00:00<00:00,  8.58it/s, loss=0.1890, accuracy=0.7000, lr=0.0000]Fold 1 Epoch 2/20 [Train]: 100%|##########| 4/4 [00:00<00:00,  8.03it/s, loss=0.1890, accuracy=0.7000, lr=0.0000]
+Fold 1 Epoch 3/20 [Train]:   0%|          | 0/4 [00:00<?, ?it/s]Fold 1 Epoch 3/20 [Train]:   0%|          | 0/4 [00:00<?, ?it/s, loss=0.2728, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 3/20 [Train]:  25%|##5       | 1/4 [00:00<00:00,  5.79it/s, loss=0.2728, accuracy=0.6875, lr=0.0000]Fold 1 Epoch 3/20 [Train]:  25%|##5       | 1/4 [00:00<00:00,  3.29it/s, loss=0.2728, accuracy=0.6875, lr=0.0000]
+Traceback (most recent call last):
+  File "/gpfs/workdir/erekrakead/RmGPT/cross_validate_robot_finetuning.py", line 811, in <module>
+    main()
+  File "/gpfs/workdir/erekrakead/RmGPT/cross_validate_robot_finetuning.py", line 657, in main
+    fold_results = run_fold(
+  File "/gpfs/workdir/erekrakead/RmGPT/cross_validate_robot_finetuning.py", line 458, in run_fold
+    train_metrics = train_epoch(
+  File "/gpfs/workdir/erekrakead/RmGPT/train/trainer.py", line 499, in train_epoch
+    metrics = trainer.diagnosis_step(batch, diagnosis_head)
+  File "/gpfs/workdir/erekrakead/RmGPT/train/trainer.py", line 303, in diagnosis_step
+    self.scheduler.step()
+  File "/gpfs/users/erekrakead/.conda/envs/moment_env/lib/python3.10/site-packages/torch/optim/lr_scheduler.py", line 150, in step
+    values = self.get_lr()
+  File "/gpfs/users/erekrakead/.conda/envs/moment_env/lib/python3.10/site-packages/torch/optim/lr_scheduler.py", line 268, in get_lr
+    return [base_lr * lmbda(self.last_epoch)
+  File "/gpfs/users/erekrakead/.conda/envs/moment_env/lib/python3.10/site-packages/torch/optim/lr_scheduler.py", line 268, in <listcomp>
+    return [base_lr * lmbda(self.last_epoch)
+  File "/gpfs/workdir/erekrakead/RmGPT/train/trainer.py", line 157, in lr_lambda
+    return cosine_decay * (1 - min_lr / lr) + min_lr / lr
+ZeroDivisionError: float division by zero

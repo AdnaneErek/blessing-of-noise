@@ -1,0 +1,95 @@
+# Robot Fault Diagnosis Fine-tuning Configuration
+# Fine-tune pretrained RmGPT on robot fault diagnosis dataset
+# Uses same aggressive strategy as CWRU
+
+# Model Configuration - Same as paper
+model:
+  signal_dim: 2  # Will be adapted from pretrained checkpoint
+  patch_length: 256
+  tokenizer_stride: 256
+  
+  embed_dim: 512
+  num_prompts: 10
+  num_faults: 1  # Will be adapted per task
+  
+  num_layers: 4
+  num_heads: 8
+  ff_dim: 2048
+  dropout: 0.1
+  improved_diagnosis_head: true  # Use improved (deeper) diagnosis head
+  
+  n_fft: 256
+  wavelet: "db4"
+  wavelet_levels: 4
+
+# Training Configuration - AGGRESSIVE OPTIMIZATION (same as CWRU)
+training:
+  # Different learning rates for backbone vs head
+  lr: 1.5e-5  # Backbone (pretrained) - keep low to preserve features
+  head_lr: 5.0e-3  # Head (new) - VERY HIGH for aggressive learning
+  weight_decay: 0.01
+  warmup_steps: 500
+  max_grad_norm: 1.0
+  
+  # Loss function improvements
+  label_smoothing: 0.1  # Prevents overconfidence, improves generalization
+  use_focal_loss: true  # Handles class imbalance better
+  focal_alpha: 0.25  # Focal loss alpha (class weighting)
+  focal_gamma: 2.0  # Focal loss gamma (focusing parameter)
+  
+  # Learning rate schedule - CONSTANT (proven to work best)
+  lr_schedule: "constant"
+  min_lr: 1.0e-6
+  
+  # Training schedule
+  batch_size: 256
+  accumulate_grad_batches: 1
+  
+  # Fine-tuning - More epochs for aggressive learning
+  finetune_epochs: 200  # Full 200 epochs for maximum learning
+  prompt_learning_epochs: 5
+  task_type: "diagnosis"
+
+# Data Configuration - Robot Dataset
+data:
+  dataset_name: "ROBOT"  # Custom dataset name
+  task_name: "Diagnosis"
+  data_dir: "./data/raw/dataset"
+  
+  # Robot dataset specific
+  robot_training_folder: "20241017"  # Training dataset folder
+  robot_test_folder: "20241016"  # Test dataset folder (real robot data)
+  use_individual_files: true  # Load from individual .mat files
+  
+  # Paper-compliant split strategy
+  test_size: 0.2
+  finetune_val_size: 0.1
+  random_state: 42
+  
+  # Preprocessing
+  downsample_to_5khz: false  # Robot data already at appropriate sampling rate
+  window_length: 2048  # Standardize to 2048 time steps (will pad/truncate)
+  normalize: true
+  signal_window: null
+  overlap: 0
+
+# Evaluation Configuration
+evaluation:
+  metrics:
+    diagnosis: ["accuracy", "precision", "recall", "f1"]
+    prognosis: ["mse", "mae", "rmse", "score"]
+  save_predictions: true
+  save_dir: "results/"
+
+# Logging and Checkpoints
+logging:
+  log_dir: "logs/"
+  checkpoint_dir: "checkpoints/"
+  save_every: 10
+  log_every: 100
+
+# Hardware Configuration
+hardware:
+  device: "cuda"
+  num_workers: 4
+  pin_memory: true

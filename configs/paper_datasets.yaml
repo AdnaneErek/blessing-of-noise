@@ -1,0 +1,66 @@
+# RmGPT Paper Datasets Configuration
+# Based on common PHM benchmark datasets that are typically used in foundation model papers
+
+# Diagnosis Datasets (Fault Classification)
+diagnosis_datasets:
+  - name: "CWRU"
+    task: "Diagnosis"
+    description: "Case Western Reserve University Bearing Dataset"
+    
+  - name: "PUBD16"
+    task: "Diagnosis"
+    description: "Paderborn University Bearing Dataset"
+    
+  - name: "MFPT"
+    task: "Diagnosis"
+    description: "Mechanical Fault Prevention Test Dataset"
+    
+  - name: "NMILL"
+    task: "Diagnosis"
+    description: "NASA Milling Dataset"
+    
+  - name: "KAUG17"
+    task: "Diagnosis"
+    description: "Korea Aerospace University Gear Dataset"
+    
+  - name: "UPM20"
+    task: "Diagnosis"
+    description: "Polytechnic University of Madrid Bearing Dataset"
+
+# Prognosis Datasets (RUL Prediction)
+prognosis_datasets:
+  - name: "CMAPSS"
+    task: "Prognosis"
+    description: "NASA Commercial Modular Aero-Propulsion System Simulation"
+    
+  - name: "NCMAPSS"
+    task: "Prognosis"
+    description: "New CMAPSS Dataset"
+    
+  - name: "PRONOSTIA"
+    task: "Prognosis"
+    description: "FEMTO-ST Bearing Dataset"
+    
+  - name: "IMS"
+    task: "Prognosis"
+    description: "Intelligent Maintenance Systems Bearing Dataset"
+    
+  - name: "PHME20"
+    task: "Prognosis"
+    description: "PHM Society Fluid Filter Dataset"
+    
+  - name: "ARAMIS20"
+    task: "Prognosis"
+    description: "ARAMIS Simulation Dataset"
+    
+  - name: "CALCE_CS2"
+    task: "Prognosis"
+    description: "CALCE Battery Dataset"
+    
+  - name: "XJTU-SY"
+    task: "Prognosis"
+    description: "Xi'an Jiaotong University Bearing Dataset"
+
+# Note: The exact list of datasets used in the RmGPT paper may vary
+# This configuration includes common benchmark datasets that are typically
+# used for foundation model evaluation in PHM research.
